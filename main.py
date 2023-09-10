@@ -11,8 +11,10 @@ class RecipeScraper:
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'html.parser')
             recipe_title = soup.find('h1', class_='recipe-title').get_text()
-            ingredient_list = [ingredient.get_text() for ingredient in soup.find_all('li', class_='ingredient')]
-            instructions = [step.get_text() for step in soup.find_all('div', class_='step')]
+            ingredient_list = [ingredient.get_text(
+            ) for ingredient in soup.find_all('li', class_='ingredient')]
+            instructions = [step.get_text()
+                            for step in soup.find_all('div', class_='step')]
             print("Recipe data scraped successfully!")
             return recipe_title, ingredient_list, instructions
         else:
