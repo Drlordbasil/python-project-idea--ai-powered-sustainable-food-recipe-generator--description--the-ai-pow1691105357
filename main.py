@@ -1,6 +1,6 @@
-import requests
 from bs4 import BeautifulSoup
-```python
+import requests
+Optimized Python script:
 
 
 class RecipeScraper:
@@ -10,11 +10,11 @@ class RecipeScraper:
             response = requests.get(url)
             response.raise_for_status()
             soup = BeautifulSoup(response.content, 'html.parser')
-            recipe_title = soup.find('h1', class_='recipe-title').get_text()
-            ingredient_list = [ingredient.get_text(
-            ) for ingredient in soup.find_all('li', class_='ingredient')]
+            recipe_title = soup.select_one('.recipe-title').get_text()
+            ingredient_list = [ingredient.get_text()
+                               for ingredient in soup.select('.ingredient li')]
             instructions = [step.get_text()
-                            for step in soup.find_all('div', class_='step')]
+                            for step in soup.select('.step div')]
             return recipe_title, ingredient_list, instructions
         except requests.exceptions.HTTPError as e:
             print('Failed to scrape recipe data:', e)
@@ -33,4 +33,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-```
